@@ -1,0 +1,15 @@
+{
+  "extends": "@digitalvisioncz/typescript-config",
+  "compilerOptions": {
+    "incremental": true,
+    "checkJs": true,
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ]
+  },
+  "include": [
+    "./src/**/*",
+  ]
+}
