@@ -1,4 +1,4 @@
-import {CookieConsentSettings} from '../hooks/useCookiesConsent.types';
+import {CookieConsentSettings} from '../useCookieConsent/useCookieConsent.types';
 
 export type CookieConsentProviderProps = {
     settings?: CookieConsentSettings,

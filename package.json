@@ -13,6 +13,7 @@
   },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c --watch"
@@ -31,7 +32,6 @@
     "@rollup/plugin-eslint": "^8.0.1",
     "@rollup/plugin-image": "^2.1.1",
     "@rollup/plugin-inject": "^4.0.2",
-    "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "^8.3.4",
     "@svgr/rollup": "^5.5.0",
     "@types/react": "^18.0.17",

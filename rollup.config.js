@@ -10,15 +10,56 @@ import image from '@rollup/plugin-image';
 import typescript from '@rollup/plugin-typescript';
 import pkg from './package.json';
 
+const plugins =  [
+    postcss({
+        config: {
+            path: './postcss.config.js',
+        },
+    }),
+    nodeResolve({
+        extensions: [
+            '.jsx',
+            '.js',
+            '.json',
+            '.css',
+        ],
+    }),
+    eslint({
+        exclude: [
+            '**/*.css',
+            '**/*.svg',
+            '**/*.png',
+        ],
+    }),
+    external({
+        includeDependencies: true,
+    }),
+    commonjs(),
+    babel({
+        babelHelpers: 'bundled',
+        exclude: 'node_modules/**',
+    }),
+    inject({
+        modules: {
+            React: 'react',
+        },
+    }),
+    image({
+        exclude: ['**/*.svg'],
+    }),
+    svgr(),
+    typescript(),
+];
+
 export default {
-    input: 'src/index.ts',
+    input: ['src/index.ts', 'src/cookieContext/index.ts', 'src/useCookieConsent/index.ts'],
     output: [
         {
-            file: pkg.main,
+            dir: 'dist',
             format: 'cjs',
             exports: 'named',
         }, {
-            file: pkg.module,
+            dir: 'dist',
             format: 'es',
             exports: 'named',
         },
@@ -28,44 +69,6 @@ export default {
         'react-dom',
         'prop-types',
     ],
-    plugins: [
-        postcss({
-            config: {
-                path: './postcss.config.js',
-            },
-        }),
-        nodeResolve({
-            extensions: [
-                '.jsx',
-                '.js',
-                '.json',
-                '.css',
-            ],
-        }),
-        eslint({
-            exclude: [
-                '**/*.css',
-                '**/*.svg',
-                '**/*.png',
-            ],
-        }),
-        external({
-            includeDependencies: true,
-        }),
-        commonjs(),
-        babel({
-            babelHelpers: 'bundled',
-            exclude: 'node_modules/**',
-        }),
-        inject({
-            modules: {
-                React: 'react',
-            },
-        }),
-        image({
-            exclude: ['**/*.svg'],
-        }),
-        svgr(),
-        typescript(),
-    ],
+    plugins,
+    preserveModules: true,
 };

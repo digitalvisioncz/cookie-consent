@@ -7,9 +7,13 @@
       {
         "name": "typescript-plugin-css-modules"
       }
-    ]
+    ],
+    "declaration": true,
+    "declarationDir": "dist",
   },
   "include": [
     "./src/**/*",
-  ]
+  ],
+  "sourceMap": true,
+  "rootDir": "src",
 }

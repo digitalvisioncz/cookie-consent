@@ -1,14 +1,17 @@
 import {createContext, useContext, useMemo} from 'react';
-import useCookiesConsent from '../hooks/useCookiesConsent';
+import useCookiesConsent from '../useCookieConsent/useCookieConsent';
 import {CookieConsentProviderProps, CookiesConsentWrapperProps} from './context.types';
-import {ICookieConsent} from '../hooks/useCookiesConsent.types';
+import {ICookieConsent} from '../useCookieConsent/useCookieConsent.types';
 
 const createCookieConsentContext = () => createContext<ICookieConsent>({
-    consent: {},
-    consentSelected: false,
+    consent: {
+        cookies: [],
+        groups: [],
+        isAccepted: false,
+    },
     declineAllCookies: () => {},
     acceptAllCookies: () => {},
-    acceptCookie: () => {},
+    acceptSelectedCookies: () => {},
 });
 
 export const CookieConsentContext = createCookieConsentContext();
@@ -19,26 +22,23 @@ const CookieConsentProvider = ({
 }: CookieConsentProviderProps) => {
     const {
         consent,
-        consentSelected,
         acceptAllCookies,
         declineAllCookies,
-        acceptCookie,
+        acceptSelectedCookies,
     } = useCookiesConsent(settings || {});
 
     const context = useMemo<ICookieConsent>(
         () => ({
             consent,
-            consentSelected,
             acceptAllCookies,
             declineAllCookies,
-            acceptCookie,
+            acceptSelectedCookies,
         }),
         [
             consent,
-            consentSelected,
             acceptAllCookies,
             declineAllCookies,
-            acceptCookie,
+            acceptSelectedCookies,
         ],
     );
 
