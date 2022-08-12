@@ -8,7 +8,7 @@ import inject from '@rollup/plugin-inject';
 import svgr from '@svgr/rollup';
 import image from '@rollup/plugin-image';
 import typescript from '@rollup/plugin-typescript';
-import pkg from './package.json';
+import dts from 'rollup-plugin-dts'
 
 const plugins =  [
     postcss({
@@ -26,6 +26,8 @@ const plugins =  [
     }),
     eslint({
         exclude: [
+            'node_modules/**',
+            'dist/**',
             '**/*.css',
             '**/*.svg',
             '**/*.png',
@@ -48,18 +50,27 @@ const plugins =  [
         exclude: ['**/*.svg'],
     }),
     svgr(),
-    typescript(),
+    typescript({
+        tsconfig: './tsconfig.json',
+    }),
 ];
 
-export default {
-    input: ['src/index.ts', 'src/cookieContext/index.ts', 'src/useCookieConsent/index.ts'],
+const libraries = [
+    'cookieContext',
+    'useCookieConsent',
+]
+
+export default [{
+    input: ['src/index.ts', ...libraries.map(lib => `src/${lib}/index.ts`)],
     output: [
         {
             dir: 'dist',
+            entryFileNames: '[name].js',
             format: 'cjs',
             exports: 'named',
         }, {
             dir: 'dist',
+            entryFileNames: '[name].module.js',
             format: 'es',
             exports: 'named',
         },
@@ -71,4 +82,14 @@ export default {
     ],
     plugins,
     preserveModules: true,
-};
+},
+{
+    input: 'src/index.ts',
+    output: [
+        {
+            file: `dist/index.d.ts`,
+            format: 'es',
+        }
+    ],
+    plugins: [dts()],
+}];

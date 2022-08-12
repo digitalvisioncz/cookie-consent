@@ -1,7 +1,6 @@
 {
   "extends": "@digitalvisioncz/typescript-config",
   "compilerOptions": {
-    "incremental": true,
     "checkJs": true,
     "plugins": [
       {
@@ -9,11 +8,9 @@
       }
     ],
     "declaration": true,
-    "declarationDir": "dist",
+    "outDir": "dist"
   },
   "include": [
     "./src/**/*",
   ],
-  "sourceMap": true,
-  "rootDir": "src",
 }
